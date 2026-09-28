@@ -11,10 +11,10 @@ void initLevel3(){
 		rowRevealed[i] = 0;
 	}
 
-	p1_x = 400;
+	p1_x = 440;
 	p1_y = 60;
 
-	int botStartX[5] = { 300, 340, 400, 460, 500 };
+	int botStartX[5] = { 280, 320, 360 , 480, 520 };
 	int aliveBots[NUMBER_OF_BOTS];
 	int aliveCount = 0;
 	for (int i = 0; i < NUMBER_OF_BOTS; i++){
