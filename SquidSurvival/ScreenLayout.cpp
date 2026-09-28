@@ -96,7 +96,13 @@ void iDraw()
 		iText(400, 220, "HARD", GLUT_BITMAP_9_BY_15);
 		*/
 	}
-		else if (gameState == STATE_HELP){
+	else if (gameState == STATE_CREDITS){
+			//Background Image
+			iShowImage(0, 0, 800, 600, CreditsStateBG);
+			
+			//BackButton
+			iShowImage(725, 25, 50, 50, BackButton);
+			/*
 			iSetColor(20, 20, 30);
 			iFilledRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -108,6 +114,7 @@ void iDraw()
 			iSetColor(231, 76, 60);
 			iRectangle(350, 250, 100, 30);
 			iText(370, 260, "BACK", GLUT_BITMAP_9_BY_15);
+			*/
 		}
 	else if (gameState == STATE_PLAYER_SELECT){
 			iSetColor(255 ,255 ,255);
@@ -266,11 +273,40 @@ void iDraw()
 		iSetColor(10, 15, 25);
 		iFilledRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		iLine(270, 50, 270, 530);
-		iLine(530, 50, 530, 530);
+
+		int leftRopeA = LEVEL3_LEFT_BOX_X - 14;
+		int leftRopeB = LEVEL3_LEFT_BOX_X + LEVEL3_BOX_WIDTH + 6;
+		int rightRopeA = LEVEL3_RIGHT_BOX_X - 6;
+		int rightRopeB = LEVEL3_RIGHT_BOX_X + LEVEL3_BOX_WIDTH + 14;
+		int ropeTop = 45, ropeBottom = 535;
+
+		iSetColor(120, 88, 58);
+		iFilledRectangle(leftRopeA, ropeTop, 7, ropeBottom - ropeTop);
+		iFilledRectangle(leftRopeB, ropeTop, 7, ropeBottom - ropeTop);
+		iFilledRectangle(rightRopeA, ropeTop, 7, ropeBottom - ropeTop);
+		iFilledRectangle(rightRopeB, ropeTop, 7, ropeBottom - ropeTop);
+
+
+		iSetColor(70, 48, 30);
+		for (int t = ropeTop + 4; t <= ropeBottom - 4; t += 10){
+			int off = ((t / 10) % 2 == 0) ? 0 : 3;
+			iFilledRectangle(leftRopeA + off, t, 3, 5);
+			iFilledRectangle(leftRopeB + off, t, 3, 5);
+			iFilledRectangle(rightRopeA + off, t, 3, 5);
+			iFilledRectangle(rightRopeB + off, t, 3, 5);
+		}
+		iSetColor(90, 65, 42);
+		iFilledRectangle(leftRopeA, ropeTop, rightRopeB - leftRopeA, LEVEL3_ROW_START_Y - ropeTop);
 
 		for (int r = 0; r < 5; r++){
 			int y = LEVEL3_ROW_START_Y + r * LEVEL3_ROW_SPACING;
+
+
+			iSetColor(90, 65, 42);
+			iFilledRectangle(leftRopeA + 7, y + LEVEL3_BOX_HEIGHT / 2 - 2, LEVEL3_LEFT_BOX_X - (leftRopeA + 7), 4);
+			iFilledRectangle(LEVEL3_LEFT_BOX_X + LEVEL3_BOX_WIDTH, y + LEVEL3_BOX_HEIGHT / 2 - 2, leftRopeB - (LEVEL3_LEFT_BOX_X + LEVEL3_BOX_WIDTH), 4);
+			iFilledRectangle(rightRopeA + 7, y + LEVEL3_BOX_HEIGHT / 2 - 2, LEVEL3_RIGHT_BOX_X - (rightRopeA + 7), 4);
+			iFilledRectangle(LEVEL3_RIGHT_BOX_X + LEVEL3_BOX_WIDTH, y + LEVEL3_BOX_HEIGHT / 2 - 2, rightRopeB - (LEVEL3_RIGHT_BOX_X + LEVEL3_BOX_WIDTH), 4);
 
 			if (rowRevealed[r]){
 				if (safePath[r] == 0) iSetColor(46, 204, 113);
@@ -282,53 +318,45 @@ void iDraw()
 				iFilledRectangle(LEVEL3_RIGHT_BOX_X, y, LEVEL3_BOX_WIDTH, LEVEL3_BOX_HEIGHT);
 			}
 			else{
-				iSetColor(100, 140, 160);
+
+				iSetColor(150, 195, 210);
 				iFilledRectangle(LEVEL3_LEFT_BOX_X, y, LEVEL3_BOX_WIDTH, LEVEL3_BOX_HEIGHT);
 				iFilledRectangle(LEVEL3_RIGHT_BOX_X, y, LEVEL3_BOX_WIDTH, LEVEL3_BOX_HEIGHT);
+
+				iSetColor(210, 235, 240);
+				iFilledRectangle(LEVEL3_LEFT_BOX_X + 8, y + LEVEL3_BOX_HEIGHT - 14, LEVEL3_BOX_WIDTH - 30, 6);
+				iFilledRectangle(LEVEL3_RIGHT_BOX_X + 8, y + LEVEL3_BOX_HEIGHT - 14, LEVEL3_BOX_WIDTH - 30, 6);
 			}
 
-			iSetColor(255, 255, 255);
+			iSetColor(230, 230, 235);
 			iRectangle(LEVEL3_LEFT_BOX_X, y, LEVEL3_BOX_WIDTH, LEVEL3_BOX_HEIGHT);
 			iRectangle(LEVEL3_RIGHT_BOX_X, y, LEVEL3_BOX_WIDTH, LEVEL3_BOX_HEIGHT);
 		}
-
-		for (int r = 0; r < 4; r++){
-			int y = LEVEL3_ROW_START_Y + r * LEVEL3_ROW_SPACING;
-			int gapTop = y + LEVEL3_BOX_HEIGHT;
-			int gapHeight = LEVEL3_GAP_HEIGHT;
-
-			iSetColor(180, 190, 200);
-			int leftInner = LEVEL3_LEFT_BOX_X + LEVEL3_BOX_WIDTH - 10;
-			int rightInner = LEVEL3_RIGHT_BOX_X;
-			iFilledRectangle(leftInner, gapTop, 10, gapHeight);
-			iFilledRectangle(rightInner, gapTop, 10, gapHeight);
-			iFilledRectangle(leftInner + 5, gapTop + gapHeight / 2 - 5, (rightInner - leftInner) - 5, 10);
-		}
-
-		char* playerImagesA[6] = {
-			"avatar_player_001_runA.bmp", "avatar_player_007_runA.bmp", "avatar_player_222_runA.bmp",
-			"avatar_player_230_runA.bmp", "avatar_player_284_runA.bmp", "avatar_player_456_runA.bmp"
-		};
-		char* playerImagesB[6] = {
-			"avatar_player_001_runB.bmp", "avatar_player_007_runB.bmp", "avatar_player_222_runB.bmp",
-			"avatar_player_230_runB.bmp", "avatar_player_284_runB.bmp", "avatar_player_456_runB.bmp"
-		};
-
 		for (int i = 0; i < NUMBER_OF_BOTS; i++){
 			if (bots[i].isAlive){
-				int botImgIndex = i % 5;
-				if (botImgIndex >= selectedPlayer) botImgIndex++;
-				int botCycle = ((int)bots[i].y) % 20;
-				int botBounce = (botCycle < 10) ? botCycle / 2 : (19 - botCycle) / 2;
-
 				iSetColor(190, 160, 120);
-				int botShadowW = 12 - botBounce;
-				iFilledEllipse((int)bots[i].x, (int)bots[i].y - 16, botShadowW, botShadowW / 3 + 2, 16);
+				iFilledEllipse((int)bots[i].x, (int)bots[i].y - 14, 10, 4, 16);
 
-				if (botCycle < 10)
-					iShowBMP2((int)bots[i].x - 20, (int)bots[i].y - 20 + botBounce, playerImagesA[botImgIndex], 16777215);
-				else
-					iShowBMP2((int)bots[i].x - 20, (int)bots[i].y - 20 + botBounce, playerImagesB[botImgIndex], 16777215);
+				if (i == activeBotIndex && bots[i].reactionTimer <= 0){
+					//This bot's turn, and it's actually walking right now
+					int cyc = ((int)bots[i].y) % 20;
+					int tex = (cyc < 10) ? level3RunA : level3RunB;
+					iShowImage((int)bots[i].x - 22, (int)bots[i].y - 30, 44, 58, tex);
+				}
+				else{
+					//Either waiting in line, or standing on the panel deciding
+					iShowImage((int)bots[i].x - 20, (int)bots[i].y - 30, 40, 50, level3Wait[i % 5]);
+				}
+
+
+				int qNum = 0;
+				for (int q = 0; q < level3QueueCount; q++){
+					if (level3Queue[q] == i){ qNum = q + 1; break; }
+				}
+				char numStr[8];
+				sprintf(numStr, "%d", qNum);
+				iSetColor(255, 255, 255);
+				iText((int)bots[i].x - 4, (int)bots[i].y + 30, numStr, GLUT_BITMAP_8_BY_13);
 			}
 			else{
 				iSetColor(180, 40, 40);
@@ -337,23 +365,49 @@ void iDraw()
 			}
 		}
 
-		int playerCycle = ((int)p1_y) % 20;
-		int playerBounce = (playerCycle < 10) ? playerCycle / 2 : (19 - playerCycle) / 2;
-
 		iSetColor(190, 160, 120);
-		int playerShadowW = 12 - playerBounce;
-		iFilledEllipse((int)p1_x, (int)p1_y - 16, playerShadowW, playerShadowW / 3 + 2, 16);
+		iFilledEllipse((int)p1_x, (int)p1_y - 14, 10, 4, 16);
 
-		if (playerCycle < 10)
-			iShowBMP2((int)p1_x - 20, (int)p1_y - 20 + playerBounce, playerImagesA[selectedPlayer], 16777215);
-		else
-			iShowBMP2((int)p1_x - 20, (int)p1_y - 20 + playerBounce, playerImagesB[selectedPlayer], 16777215);
+		if (activeBotIndex == -1){
+			//Your turn - actively walking, toggle the two run frames
+			int cyc = ((int)p1_y) % 20;
+			int tex = (cyc < 10) ? level3RunA : level3RunB;
+			iShowImage((int)p1_x - 22, (int)p1_y - 30, 44, 58, tex);
+		}
+		else{
+			//Waiting for your turn
+			iShowImage((int)p1_x - 20, (int)p1_y - 30, 40, 50, level3WaitPlayer);
+		}
+
+		int playerQNum = 0;
+		for (int q = 0; q < level3QueueCount; q++){
+			if (level3Queue[q] == NUMBER_OF_BOTS){ playerQNum = q + 1; break; }
+		}
+		char playerNumStr[8];
+		sprintf(playerNumStr, "%d", playerQNum);
+		iSetColor(255, 215, 0);
+		iText((int)p1_x - 4, (int)p1_y + 30, playerNumStr, GLUT_BITMAP_8_BY_13);
 		char scoreStr[50];
 		iSetColor(255, 255, 255);
 		sprintf(scoreStr, "SCORE : %d", score);
 		iText(650, 560, scoreStr, GLUT_BITMAP_TIMES_ROMAN_24);
 		iText(20, 560, "LEVEL 3: Glass Bridge", GLUT_BITMAP_TIMES_ROMAN_24);
-		iText(20, 530, "Watch the bots and follow the SAFE (green) side!", GLUT_BITMAP_8_BY_13);
+
+		int remaining = 1; //you
+		for (int i = 0; i < NUMBER_OF_BOTS; i++) if (bots[i].isAlive) remaining++;
+		char hudStr[60];
+		sprintf(hudStr, "STEP %d OF 5   |   PLAYERS REMAINING: %d", (currentStep < 5 ? currentStep + 1 : 5), remaining);
+		iSetColor(255, 215, 0);
+		iText(20, 538, hudStr, GLUT_BITMAP_8_BY_13);
+
+		if (activeBotIndex == -1){
+			iSetColor(46, 204, 113);
+			iText(20, 20, "YOUR TURN! Walk up and choose left or right.", GLUT_BITMAP_8_BY_13);
+		}
+		else{
+			iSetColor(255, 255, 255);
+			iText(20, 20, "Watch closely - someone else is crossing right now...", GLUT_BITMAP_8_BY_13);
+		}
 	}
 	else if (gameState == STATE_GAMEOVER){
 		if (!eliminatedSoundPlayed){

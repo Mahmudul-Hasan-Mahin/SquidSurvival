@@ -26,24 +26,25 @@ void iMouse(int button, int state, int mx, int my)
 				stopBGM();
 				gameState = OPTIONS_PAGE;
 			}
-			else if (mx >= 350 && mx <= 450 && my >= 220 && my <= 250){
-				gameState = STATE_HELP;
+			else if (mx >= 300 && mx <= 500 && my >= 125 && my <= 179){
+				playButtonClickSound();
+				gameState = STATE_CREDITS;
 			}
 		}
 		else if (gameState == STATE_DIFFICULTY){
-			if (mx >= 370 && mx <= 470 && my >= 310 && my <= 340){
+			if (mx >= 300 && mx <= 500 && my >= 300 && my <= 364){
 				playButtonClickSound();
 				difficulty = DIFFICULTY_EASY;
 				setDifficulty(difficulty);
 				gameState = STATE_PLAYER_SELECT;
 			}
-			else if (mx >= 370 && mx <= 470 && my >= 260 && my <= 290){
+			else if (mx >= 300 && mx <= 500 && my >= 225 && my <= 289){
 				playButtonClickSound();
 				difficulty = DIFFICULTY_MEDIUM;
 				setDifficulty(difficulty);
 				gameState = STATE_PLAYER_SELECT;
 			}
-			else if (mx >= 370 && mx <= 470 && my >= 210 && my <= 240){
+			else if (mx >= 300 && mx <= 500 && my >= 150 && my <= 214){
 				playButtonClickSound();
 				difficulty = DIFFICULTY_HARD;
 				setDifficulty(difficulty);
@@ -69,8 +70,10 @@ void iMouse(int button, int state, int mx, int my)
 				}
 			}
 		}
-		else if (gameState == STATE_HELP){
-			if (mx >= 350 && mx <= 450 && my >= 250 && my <= 280){
+		else if (gameState == STATE_CREDITS){
+			//BackButton
+			if (mx >= 725 && mx <= 775 && my >= 25 && my <= 75){
+				playButtonClickSound();
 				gameState = STATE_MENU;
 			}
 		}

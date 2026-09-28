@@ -7,3 +7,6 @@
 #include <time.h>
 
 void initLevel3();
+
+
+void updateLevel3();

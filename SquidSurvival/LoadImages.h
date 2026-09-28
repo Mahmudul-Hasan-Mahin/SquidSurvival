@@ -13,5 +13,11 @@ extern int BackButton;
 extern int OptionsPageBG;
 extern int SoundButtonTurnedOn;
 extern int SoundButtonTurnedOff;
+extern int CreditsStateBG;
+
+//Level 3 top-down sprites (cut from the reference bridge image)
+extern int level3RunA, level3RunB;
+extern int level3Wait[5];
+extern int level3WaitPlayer;
 
 void loadAllImages();

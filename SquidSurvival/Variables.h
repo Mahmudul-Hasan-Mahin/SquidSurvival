@@ -16,7 +16,7 @@
 #define STATE_GAMEOVER 4
 #define STATE_VICTORY 5
 #define STATE_DIFFICULTY 6 
-#define STATE_HELP 7 
+#define STATE_CREDITS 7 
 #define STATE_PLAYER_SELECT 8
 #define OPTIONS_PAGE 9
 
@@ -72,7 +72,10 @@ extern int timeLimit;
 #define NUMBER_OF_BOTS 5
 extern int rowRevealed[5];   
 extern int activeBotIndex;   
-extern int level3Phase;      
+extern int level3Queue[NUMBER_OF_BOTS + 1];
+extern int level3QueueCount;
+extern int level3TurnIndex;
+extern int level3Phase;
 struct Bot{
 	double x, y;
 	double speed;
