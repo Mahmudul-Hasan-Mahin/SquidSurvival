@@ -31,6 +31,7 @@ void loadAllImages(){
 	OptionsPageBG = iLoadImage("OptionsPageBG.png");
 	SoundButtonTurnedOn = iLoadImage("SoundButtonTurnedOn.png");
 	SoundButtonTurnedOff = iLoadImage("SoundButtonTurnedOff.png");
+	CreditsStateBG = iLoadImage("CREDITS.png");
 	
 
 	//Level 3: whoever's turn it is toggles between these two run frames
