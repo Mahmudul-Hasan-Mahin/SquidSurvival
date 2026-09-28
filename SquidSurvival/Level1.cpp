@@ -109,29 +109,36 @@ void fixedUpdate()
 	}
 
 	if (gameState == STATE_LEVEL3){
-		if (isSpecialKeyPressed(GLUT_KEY_UP)) p1_y += LEVEL1_SPEED;
-		if (isSpecialKeyPressed(GLUT_KEY_LEFT)) p1_x -= LEVEL1_SPEED;
-		if (isSpecialKeyPressed(GLUT_KEY_RIGHT)) p1_x += LEVEL1_SPEED;
+		//You can only move when it's genuinely your turn (activeBotIndex == -1
+		//means the queue has reached you - see updateLevel3() in Level3.cpp)
+		if (activeBotIndex == -1){
+			if (isSpecialKeyPressed(GLUT_KEY_UP)) p1_y += playerSpeed;
+			if (isSpecialKeyPressed(GLUT_KEY_LEFT)) p1_x -= playerSpeed;
+			if (isSpecialKeyPressed(GLUT_KEY_RIGHT)) p1_x += playerSpeed;
 
-		if (p1_x < 300) p1_x = 300;
-		if (p1_x > 500) p1_x = 500;
+			if (p1_x < 300) p1_x = 300;
+			if (p1_x > 500) p1_x = 500;
 
-		if (currentStep < 5){
-			int rowY = LEVEL3_ROW_START_Y + currentStep * LEVEL3_ROW_SPACING + LEVEL3_BOX_HEIGHT / 2;
-			if (p1_y >= rowY){
-				int chosen = (p1_x < LEVEL3_CHOICE_BOUNDARY_X) ? 0 : 1;
-				rowRevealed[currentStep] = 1;
+			if (currentStep < 5){
+				int rowY = LEVEL3_ROW_START_Y + currentStep * LEVEL3_ROW_SPACING + LEVEL3_BOX_HEIGHT / 2;
+				if (p1_y >= rowY){
+					int chosen = (p1_x < LEVEL3_CHOICE_BOUNDARY_X) ? 0 : 1;
+					rowRevealed[currentStep] = 1;
 
-				if (chosen == safePath[currentStep]){
-					currentStep++;
-					score += 100;
-					if (currentStep >= 5){
-						score += 500;
-						gameState = STATE_VICTORY;
+					p1_x = (chosen == 0) ? (LEVEL3_LEFT_BOX_X + LEVEL3_BOX_WIDTH / 2) : (LEVEL3_RIGHT_BOX_X + LEVEL3_BOX_WIDTH / 2);
+					p1_y = rowY;
+
+					if (chosen == safePath[currentStep]){
+						currentStep++;
+						score += 100;
+						if (currentStep >= 5){
+							score += 500;
+							gameState = STATE_VICTORY;
+						}
 					}
-				}
-				else{
-					gameState = STATE_GAMEOVER;
+					else{
+						gameState = STATE_GAMEOVER;
+					}
 				}
 			}
 		}
@@ -192,40 +199,7 @@ void gameUpdateTimer(){
 	}
 
 	if (gameState == STATE_LEVEL3){
-		for (int i = 0; i < NUMBER_OF_BOTS; i++) {
-			if (!bots[i].isAlive || bots[i].isFinished) continue;
-
-			bots[i].y += bots[i].speed;
-
-			if (bots[i].currentRow < 5){
-				int rowY = LEVEL3_ROW_START_Y + bots[i].currentRow * LEVEL3_ROW_SPACING + LEVEL3_BOX_HEIGHT / 2;
-				if (bots[i].y >= rowY){
-					int r = bots[i].currentRow;
-					int choice;
-
-					if (rowRevealed[r]){
-						choice = safePath[r];
-					}
-					else{
-						choice = rand() % 2;
-						rowRevealed[r] = 1;
-					}
-
-
-					bots[i].x = (choice == 0) ? (LEVEL3_LEFT_BOX_X + LEVEL3_BOX_WIDTH / 2) : (LEVEL3_RIGHT_BOX_X + LEVEL3_BOX_WIDTH / 2);
-
-					if (choice == safePath[r]){
-						bots[i].currentRow++;
-						if (bots[i].currentRow >= 5){
-							bots[i].isFinished = 1;
-						}
-					}
-					else{
-						bots[i].isAlive = 0;
-					}
-				}
-			}
-		}
+		updateLevel3();
 	}
 }
 //TimerCount
