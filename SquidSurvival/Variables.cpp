@@ -63,7 +63,7 @@ void setDifficulty(int d){
 		playerSpeed = 1.7;
 	}
 	else if (d == DIFFICULTY_HARD){
-		timeLimit = 20;
+		timeLimit = 120;
 		botSpeedMultiplier = 1.4;
 		botMistakeChance = 10;
 		greenMin = 40; greenRange = 30;

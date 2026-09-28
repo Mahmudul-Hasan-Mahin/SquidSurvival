@@ -97,7 +97,7 @@ extern double starX[MAX_SHAPE_POINTS], starY[MAX_SHAPE_POINTS];
 extern int checkpointsVisited[MAX_SHAPE_POINTS];
 extern int numCheckpoints;
 extern int isMouseDown;
-#define LEVEL2_RADIUS 100.0
+#define LEVEL2_RADIUS 5.0
 
 //Level 3 Variables
 extern int safePath[5];
