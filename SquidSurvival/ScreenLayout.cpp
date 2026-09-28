@@ -33,7 +33,7 @@ void iDraw()
 		iShowImage(300, 125, 200, 64, CreditsButton);
 
 		//HighScoreButton
-		iShowImage(300, 50, 200, 64, HighScoreButton);
+		//iShowImage(300, 50, 200, 64, HighScoreButton);
 
 		/*
 		// CONTINUE button
